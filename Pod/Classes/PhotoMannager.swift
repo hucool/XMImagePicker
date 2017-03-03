@@ -71,7 +71,6 @@ struct PhotoMannager {
     static func loadAlbumPhotos(collection: PHAssetCollection, resultHandler: @escaping(_ assets: [PHAsset]) -> Void) {
         DispatchQueue.global().async {
             var assets = [PHAsset]()
-            let options = PHFetchOptions()
             let list = PHAsset.fetchAssets(in: collection, options: nil)
             for idx in 0..<list.count {
                 assets.append(list.object(at: idx))

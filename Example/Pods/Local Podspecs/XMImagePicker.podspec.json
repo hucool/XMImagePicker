@@ -1,6 +1,6 @@
 {
   "name": "XMImagePicker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "image picker",
   "homepage": "https://github.com/hucool/XMImagePicker",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/hucool/XMImagePicker.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "platforms": {
     "ios": "8.0"

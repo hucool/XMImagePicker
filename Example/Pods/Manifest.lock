@@ -1,6 +1,6 @@
 PODS:
   - WXImageCompress (0.1.1)
-  - XMImagePicker (0.1.0):
+  - XMImagePicker (0.1.1):
     - WXImageCompress (~> 0.1.1)
 
 DEPENDENCIES:
@@ -12,7 +12,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   WXImageCompress: 4003213a788574c3e307faec0130359c52e43887
-  XMImagePicker: e308bfb2d44f493d87dff248a038e112e72d9477
+  XMImagePicker: 46b92f965ad19d1f93bcbe048ac2d8006cd56fc9
 
 PODFILE CHECKSUM: f4521fe024a501bb8391939e6ac9969773ef4a26
 
