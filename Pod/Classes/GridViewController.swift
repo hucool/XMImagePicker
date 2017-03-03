@@ -134,6 +134,8 @@ class GridViewController: UIViewController {
         PhotoMannager.loadAlbumPhotos(collection: albumInfo.collection) { (assets) in
             self.assets = assets
             self.iAssetCollectionView.reloadData()
+            let indexPath = IndexPath(row: assets.count - 1, section: 0)
+            self.iAssetCollectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.top, animated: false)
         }
     }
     
@@ -205,6 +207,20 @@ protocol AssetSelectDelegate: class {
 extension GridViewController: AssetSelectDelegate {
     
     func didSelectAsset(_ asset: PHAsset, isSelected select: Bool) {
+        func relaodItems() {
+            // 刷新列表
+            let idx = assets.index(where: { (a) -> Bool in
+                return assetEquals(a)
+            })!
+            iAssetCollectionView.reloadItems(at: [IndexPath(item: idx, section: 0)])
+        }
+        
+        if select && selectAssets.count == 9 {
+            showTipAlert()
+            relaodItems()
+            return
+        }
+        
         func assetEquals(_ a: PHAsset) -> Bool {
             return a.localIdentifier == asset.localIdentifier
         }
@@ -220,13 +236,7 @@ extension GridViewController: AssetSelectDelegate {
             selectAssets.remove(at: idx)
         }
         
-        // 刷新列表
-        let idx = assets.index(where: { (a) -> Bool in
-            return assetEquals(a)
-        })!
-        iAssetCollectionView.reloadItems(at: [IndexPath(item: idx, section: 0)])
-        
-        // 更新选中图片数量
+        relaodItems()
         reloadNumButton()
     }
     

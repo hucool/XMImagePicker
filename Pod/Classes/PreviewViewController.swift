@@ -150,7 +150,13 @@ class PreviewViewController: UIViewController {
     }
 
     func selectImageAction() {
-        iSelectButton.isSelected = !iSelectButton.isSelected
+        let selected = !iSelectButton.isSelected
+        if selected && selectAssets.count == 9 {
+            showTipAlert()
+            return
+        }
+        
+        iSelectButton.isSelected = selected
         let asset = assets[currentIndex]
         if iSelectButton.isSelected && !selectAssets.contains(asset) {
             selectAssets.append(asset)
@@ -161,7 +167,7 @@ class PreviewViewController: UIViewController {
             selectAssets.remove(at: idx!)
         }
         
-        assetSelectDelegate.didSelectAsset(asset, isSelected: iSelectButton.isSelected)
+        assetSelectDelegate.didSelectAsset(asset, isSelected: selected)
         
         reloadNumButton()
     }

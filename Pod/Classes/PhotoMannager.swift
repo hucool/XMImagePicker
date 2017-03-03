@@ -72,10 +72,7 @@ struct PhotoMannager {
         DispatchQueue.global().async {
             var assets = [PHAsset]()
             let options = PHFetchOptions()
-            // 根据创建时间排序
-            let sort = NSSortDescriptor(key: "creationDate", ascending: false)
-            options.sortDescriptors = [sort]
-            let list = PHAsset.fetchAssets(in: collection, options: options)
+            let list = PHAsset.fetchAssets(in: collection, options: nil)
             for idx in 0..<list.count {
                 assets.append(list.object(at: idx))
             }
