@@ -40,10 +40,10 @@ struct PhotoMannager {
                                                              subtype: .albumRegular,
                                                              options: nil)
         loadCollections(system)
-        // system album sort by count
-        albumInfos.sort { (a, b) -> Bool in
-            return a.count > b.count
-        }
+//        // system album sort by count
+//        albumInfos.sort { (a, b) -> Bool in
+//            return a.count > b.count
+//        }
         
         // load user albums
         let user = PHCollectionList.fetchTopLevelUserCollections(with: nil)
