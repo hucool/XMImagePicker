@@ -1,0 +1,6 @@
+framework module XMImagePicker {
+  umbrella header "XMImagePicker-umbrella.h"
+
+  export *
+  module * { export * }
+}

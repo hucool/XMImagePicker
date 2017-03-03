@@ -1,0 +1,5 @@
+use_frameworks!
+
+target 'PROJECT_Example' do
+  pod 'XMImagePicker', :path => '../'
+end
