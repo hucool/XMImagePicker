@@ -100,7 +100,7 @@ open class XMImagePickerController: UINavigationController {
         }
         
         let o = (dic[XMImagePickerController.IsOriginalKey] as? Bool) ?? false
-        PhotoMannager.requestImages(isMarkUrl: config.isMarkImageURL, full: o, assets: s) { (photos) in
+        PhotoMannager.requestImages(isMarkUrl: config.isMarkImageURL, isCreateThumbImage: !o, assets: s) { (photos) in
             if let handle = self.resultHandler {
                 handle(photos)
                 self.resultHandler = nil

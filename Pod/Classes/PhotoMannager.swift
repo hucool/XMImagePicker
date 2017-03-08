@@ -40,10 +40,10 @@ struct PhotoMannager {
                                                              subtype: .albumRegular,
                                                              options: nil)
         loadCollections(system)
-//        // system album sort by count
-//        albumInfos.sort { (a, b) -> Bool in
-//            return a.count > b.count
-//        }
+        //        // system album sort by count
+        //        albumInfos.sort { (a, b) -> Bool in
+        //            return a.count > b.count
+        //        }
         
         // load user albums
         let user = PHCollectionList.fetchTopLevelUserCollections(with: nil)
@@ -94,14 +94,14 @@ struct PhotoMannager {
     }
     
     static func originalImageSize(asset: PHAsset,
-                           resultHandler: @escaping(_ size: String, _ identifier: String) -> Void) {
+                                  resultHandler: @escaping(_ size: String, _ identifier: String) -> Void) {
         PhotoMannager.requestOriginalImage(asset: asset) { (data) in
             resultHandler(data.format, asset.localIdentifier)
         }
     }
     
-    static func requestImages(isMarkUrl: Bool, full: Bool, assets: [PHAsset],
-                       resultHandler: @escaping(_ photos: [Photo]) -> Void) {
+    static func requestImages(isMarkUrl: Bool, isCreateThumbImage: Bool, assets: [PHAsset],
+                              resultHandler: @escaping(_ photos: [Photo]) -> Void) {
         DispatchQueue.global().async {
             var photos = [Photo]()
             for asset in assets {
@@ -111,45 +111,37 @@ struct PhotoMannager {
                     
                     var originalP = Photo.P()
                     
-                    // 不需要保存图片
-                    if !isMarkUrl {
+                    let name = "\(asset.localIdentifier.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "-", with: "")).JPG"
+                    let url = ImageFileManager.shared.imageUrl(imageName: name)
+                    
+                    originalP.url = isMarkUrl ? url : nil
+                    if let image = ImageFileManager.shared.exists(imageName: name) {
+                        originalP.image = image
+                    } else {
                         let image = UIImage(data: data)!
                         originalP.image = image
-                        photo.original = originalP
-                        
-                        if !full {
-                            var thumbP = Photo.P()
-                            thumbP.image = photo.original.image.wxCompress()
-                            photo.thumb = thumbP
-                        }
-                    } else { // 保存图片
-                        let name = "\(asset.localIdentifier.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "-", with: "")).JPG"
-                        
-                        originalP.url = ImageFileManager.shared.imageUrl(imageName: name)
-                        if let image = ImageFileManager.shared.exists(imageName: name) {
-                            originalP.image = image
-                        } else {
-                            let image = UIImage(data: data)!
-                            originalP.image = image
-            
+                        if isMarkUrl {
                             ImageFileManager.shared.sava(data: data, imageName: name)
                         }
-                        photo.original = originalP
-                        
-                        if !full {
-                            var thumbP = Photo.P()
-                            let url = ImageFileManager.shared.imageUrl(imageName: name, isThumb: true)
-                            
+                    }
+                    photo.original = originalP
+                    
+                    if isCreateThumbImage {
+                        var thumbP = Photo.P()
+                        let url = ImageFileManager.shared.imageUrl(imageName: name, isThumb: true)
+                        thumbP.url = isMarkUrl ? url : nil
+                        if let image = ImageFileManager.shared.exists(imageName: name, isThumb: true) {
+                            thumbP.image = image
                             thumbP.url = url
-                            if let image = ImageFileManager.shared.exists(imageName: name, isThumb: true) {
-                                thumbP.image = image
-                            } else {
-                                // 压缩图片
-                                thumbP.image = photo.original.image.wxCompress()
+                        } else {
+                            // 压缩图片
+                            thumbP.image = photo.original.image.wxCompress()
+                            
+                            if isMarkUrl {
                                 ImageFileManager.shared.sava(image: thumbP.image, imageName: name, isThumb: true)
                             }
-                            photo.thumb = thumbP
                         }
+                        photo.thumb = thumbP
                     }
                     
                     photos.append(photo)
