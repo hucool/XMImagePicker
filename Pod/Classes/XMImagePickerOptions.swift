@@ -8,6 +8,12 @@
 
 import Foundation
 
-struct XMImagePickerOptions {
+public struct XMImagePickerOptions {
     
+    public var imageLimit: Int!
+    
+    public init(imageLimit: Int = 9) {
+        self.imageLimit = imageLimit
+    }
+
 }
