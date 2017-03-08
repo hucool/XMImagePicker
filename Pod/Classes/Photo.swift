@@ -12,17 +12,17 @@ import Foundation
 public struct Photo {
     
     /// asset标示
-    var identifier: String!
+    public var identifier: String!
     /// 缩略图
-    var thumb: P?
+    public var thumb: P?
     /// 原图
-    var original: P!
+    public var original: P!
     
-    struct P {
+    public struct P {
         /// 图片本地存储路径
-        var url: URL!
+        public var url: URL!
         /// 图片
-        var image: UIImage!
+        public var image: UIImage!
     }
     
 }

@@ -25,7 +25,8 @@ class ViewController: UIViewController {
         let nv = XMImagePickerController()
         nv.config = XMImagePickerOptions(imageLimit: 2)
         nv.setFinishPickingHandle { (photos) in
-            print(photos)
+            let images = photos.flatMap{ $0.original.image }
+            print(images)
         }
         present(nv, animated: true, completion: nil)
     }
