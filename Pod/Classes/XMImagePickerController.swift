@@ -16,6 +16,7 @@ open class XMImagePickerController: UINavigationController {
     static let IsOriginalKey = "isOriginal"
     static let SelectAssetsKey = "selectAssets"
     var resultHandler: CallHandler?
+    public var config: XMImagePickerOptions? = XMImagePickerOptions()
     
     private override init(rootViewController: UIViewController) {
         super.init(nibName: nil, bundle: nil)
@@ -123,5 +124,5 @@ open class XMImagePickerController: UINavigationController {
     public func setFinishPickingHandle(handle: @escaping(_ photos: [Photo]) -> Void) {
         resultHandler = handle
     }
-
+    
 }

@@ -21,8 +21,9 @@ class ViewController: UIViewController {
         view.addSubview(button)
     }
     
-    func pushController() {        
+    func pushController() {
         let nv = XMImagePickerController()
+        nv.config = XMImagePickerOptions(imageLimit: 2)
         nv.setFinishPickingHandle { (photos) in
             print(photos)
         }

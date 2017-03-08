@@ -148,11 +148,12 @@ class PreviewViewController: UIViewController {
         reloadNumButton()
         scrollViewDidEndDecelerating(iPreviewCollectionView)
     }
-
+    
     func selectImageAction() {
         let selected = !iSelectButton.isSelected
-        if selected && selectAssets.count == 9 {
-            showTipAlert()
+        let vc = navigationController as! XMImagePickerController
+        if selected && selectAssets.count == vc.config?.imageLimit {
+            showTipAlert((vc.config?.imageLimit)!)
             return
         }
         

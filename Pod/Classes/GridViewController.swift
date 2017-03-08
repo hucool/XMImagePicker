@@ -40,7 +40,7 @@ class GridViewController: UIViewController {
         self.thumbnailSize = CGSize(width: itemSize.width * screenScale, height: itemSize.height * screenScale)
         return self.thumbnailSize
     }()
-
+    
     // MARK:- UIView
     
     fileprivate lazy var iBackButton: UIBarButtonItem = {
@@ -84,7 +84,7 @@ class GridViewController: UIViewController {
         let size: CGFloat = 4
         let margin: CGFloat = 5
         let width = (self.view.frame.size.width - (size + 1) * margin) / size
-
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = margin
@@ -215,8 +215,9 @@ extension GridViewController: AssetSelectDelegate {
             iAssetCollectionView.reloadItems(at: [IndexPath(item: idx, section: 0)])
         }
         
-        if select && selectAssets.count == 9 {
-            showTipAlert()
+        let vc = navigationController as! XMImagePickerController
+        if select && selectAssets.count == vc.config?.imageLimit {
+            showTipAlert((vc.config?.imageLimit)!)
             relaodItems()
             return
         }
