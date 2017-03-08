@@ -216,8 +216,8 @@ extension GridViewController: AssetSelectDelegate {
         }
         
         let vc = navigationController as! XMImagePickerController
-        if select && selectAssets.count == vc.config?.imageLimit {
-            showTipAlert((vc.config?.imageLimit)!)
+        if select && selectAssets.count == vc.config.imageLimit {
+            showTipAlert(vc.config.imageLimit)
             relaodItems()
             return
         }

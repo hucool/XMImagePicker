@@ -16,8 +16,6 @@ class ImageFileManager {
     private let manager = FileManager.default
     
     private lazy var cacheRootFolder: URL = {
-//        let documentUrl = self.manager.urls(for: .documentDirectory,
-//                                            in: .userDomainMask).first!
         let documentUrl = URL(string: "file://" + NSTemporaryDirectory())
         return documentUrl!.appendingPathComponent("imagePickerCache",
                                                        isDirectory: true)

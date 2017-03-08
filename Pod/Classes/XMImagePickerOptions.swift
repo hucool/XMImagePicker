@@ -11,9 +11,11 @@ import Foundation
 public struct XMImagePickerOptions {
     
     public var imageLimit: Int!
+    public var isMarkImageURL: Bool!
     
-    public init(imageLimit: Int = 9) {
+    public init(imageLimit: Int = 9, isMarkImageURL: Bool = false) {
         self.imageLimit = imageLimit
+        self.isMarkImageURL = isMarkImageURL
     }
 
 }

@@ -20,7 +20,7 @@ public struct Photo {
     
     public struct P {
         /// 图片本地存储路径
-        public var url: URL!
+        public var url: URL?
         /// 图片
         public var image: UIImage!
     }

@@ -16,7 +16,7 @@ open class XMImagePickerController: UINavigationController {
     static let IsOriginalKey = "isOriginal"
     static let SelectAssetsKey = "selectAssets"
     var resultHandler: CallHandler?
-    public var config: XMImagePickerOptions? = XMImagePickerOptions()
+    public var config: XMImagePickerOptions = XMImagePickerOptions()
     
     private override init(rootViewController: UIViewController) {
         super.init(nibName: nil, bundle: nil)
@@ -100,7 +100,7 @@ open class XMImagePickerController: UINavigationController {
         }
         
         let o = (dic[XMImagePickerController.IsOriginalKey] as? Bool) ?? false
-        PhotoMannager.requestImages(full: o, assets: s) { (photos) in
+        PhotoMannager.requestImages(isMarkUrl: config.isMarkImageURL, full: o, assets: s) { (photos) in
             if let handle = self.resultHandler {
                 handle(photos)
                 self.resultHandler = nil
