@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'XMImagePicker'
-  s.version          = '0.1.1'
+  s.version          = '0.1.12'
   s.summary          = 'image picker'
   s.homepage         = 'https://github.com/hucool/XMImagePicker'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
