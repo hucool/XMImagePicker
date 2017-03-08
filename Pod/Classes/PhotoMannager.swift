@@ -100,7 +100,7 @@ struct PhotoMannager {
         }
     }
     
-    static func requestImages(full: Bool, assets: [PHAsset],
+    static func requestImages(isMarkUrl: Bool, full: Bool, assets: [PHAsset],
                        resultHandler: @escaping(_ photos: [Photo]) -> Void) {
         DispatchQueue.global().async {
             var photos = [Photo]()
@@ -109,9 +109,32 @@ struct PhotoMannager {
                     var photo = Photo()
                     photo.identifier = asset.localIdentifier
                     
+                    var originalP = Photo.P()
+                    
+                    // 不需要保存图片
+                    guard isMarkUrl else {
+                        let image = UIImage(data: data)!
+                        originalP.image = image
+                        photo.original = originalP
+                        
+                        if !full {
+                            var thumbP = Photo.P()
+                            thumbP.image = photo.original.image.wxCompress()
+                            photo.thumb = thumbP
+                        }
+                        photos.append(photo)
+
+                        guard photos.count == assets.count else {
+                            return
+                        }
+                        DispatchQueue.main.async(execute: {
+                            resultHandler(photos)
+                        })
+                        return
+                    }
+                    
                     let name = "\(asset.localIdentifier.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "-", with: "")).JPG"
                     
-                    var originalP = Photo.P()
                     originalP.url = ImageFileManager.shared.imageUrl(imageName: name)
                     if let image = ImageFileManager.shared.exists(imageName: name) {
                         originalP.image = image
