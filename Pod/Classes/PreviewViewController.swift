@@ -152,8 +152,8 @@ class PreviewViewController: UIViewController {
     func selectImageAction() {
         let selected = !iSelectButton.isSelected
         let vc = navigationController as! XMImagePickerController
-        if selected && selectAssets.count == vc.config?.imageLimit {
-            showTipAlert((vc.config?.imageLimit)!)
+        if selected && selectAssets.count == vc.config.imageLimit {
+            showTipAlert((vc.config.imageLimit)!)
             return
         }
         

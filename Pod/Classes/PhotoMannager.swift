@@ -112,7 +112,7 @@ struct PhotoMannager {
                     var originalP = Photo.P()
                     
                     // 不需要保存图片
-                    guard isMarkUrl else {
+                    if !isMarkUrl {
                         let image = UIImage(data: data)!
                         originalP.image = image
                         photo.original = originalP
@@ -122,43 +122,34 @@ struct PhotoMannager {
                             thumbP.image = photo.original.image.wxCompress()
                             photo.thumb = thumbP
                         }
-                        photos.append(photo)
-
-                        guard photos.count == assets.count else {
-                            return
-                        }
-                        DispatchQueue.main.async(execute: {
-                            resultHandler(photos)
-                        })
-                        return
-                    }
-                    
-                    let name = "\(asset.localIdentifier.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "-", with: "")).JPG"
-                    
-                    originalP.url = ImageFileManager.shared.imageUrl(imageName: name)
-                    if let image = ImageFileManager.shared.exists(imageName: name) {
-                        originalP.image = image
-                    } else {
-                        let image = UIImage(data: data)!
-                        originalP.image = image
-        
-                        ImageFileManager.shared.sava(data: data, imageName: name)
-                    }
-                    photo.original = originalP
-                    
-                    if !full {
-                        var thumbP = Photo.P()
-                        let url = ImageFileManager.shared.imageUrl(imageName: name, isThumb: true)
+                    } else { // 保存图片
+                        let name = "\(asset.localIdentifier.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "-", with: "")).JPG"
                         
-                        thumbP.url = url
-                        if let image = ImageFileManager.shared.exists(imageName: name, isThumb: true) {
-                            thumbP.image = image
+                        originalP.url = ImageFileManager.shared.imageUrl(imageName: name)
+                        if let image = ImageFileManager.shared.exists(imageName: name) {
+                            originalP.image = image
                         } else {
-                            // 压缩图片
-                            thumbP.image = photo.original.image.wxCompress()
-                            ImageFileManager.shared.sava(image: thumbP.image, imageName: name, isThumb: true)
+                            let image = UIImage(data: data)!
+                            originalP.image = image
+            
+                            ImageFileManager.shared.sava(data: data, imageName: name)
                         }
-                        photo.thumb = thumbP
+                        photo.original = originalP
+                        
+                        if !full {
+                            var thumbP = Photo.P()
+                            let url = ImageFileManager.shared.imageUrl(imageName: name, isThumb: true)
+                            
+                            thumbP.url = url
+                            if let image = ImageFileManager.shared.exists(imageName: name, isThumb: true) {
+                                thumbP.image = image
+                            } else {
+                                // 压缩图片
+                                thumbP.image = photo.original.image.wxCompress()
+                                ImageFileManager.shared.sava(image: thumbP.image, imageName: name, isThumb: true)
+                            }
+                            photo.thumb = thumbP
+                        }
                     }
                     
                     photos.append(photo)

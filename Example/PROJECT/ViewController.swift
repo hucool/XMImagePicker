@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     func pushController() {
         let nv = XMImagePickerController()
         nv.config = XMImagePickerOptions(imageLimit: 2)
-//        nv.config?.isMarkImageURL = true
+        nv.config.isMarkImageURL = true
         
         nv.setFinishPickingHandle { (photos) in
             let images = photos.flatMap{ $0.original.image }
