@@ -146,6 +146,10 @@ class GridViewController: UIViewController {
     }
     
     func previewButtonAction() {
+        guard selectAssets.count > 0 else {
+            return
+        }
+        
         let vc = PreviewViewController()
         vc.assetSelectDelegate = self
         vc.assets = selectAssets
