@@ -218,7 +218,10 @@ extension PreviewViewController: UICollectionViewDelegate, UICollectionViewDataS
         cell.localIdentifier = asset.localIdentifier
         cell.tapDelegate = self
         
-        PHCachingImageManager.default().requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFit, options: self.imageRequestOptions) { (image, info) in
+        let w = self.view.frame.size.width * UIScreen.main.scale
+        let h = self.view.frame.size.height * UIScreen.main.scale
+        let size = CGSize(width: w, height: h)
+        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFit, options: self.imageRequestOptions) { (image, info) in
             if cell.localIdentifier == asset.localIdentifier {
                 cell.image = image
             }
