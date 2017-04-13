@@ -218,6 +218,9 @@ extension PreviewViewController: UICollectionViewDelegate, UICollectionViewDataS
         cell.localIdentifier = asset.localIdentifier
         cell.tapDelegate = self
         
+        iSelectButton.isHidden = !(asset.mediaType == .image)
+        iOriginalButton.isHidden = iSelectButton.isHidden
+
         let w = self.view.frame.size.width * UIScreen.main.scale
         let h = self.view.frame.size.height * UIScreen.main.scale
         let size = CGSize(width: w, height: h)
