@@ -21,6 +21,11 @@ class AssetCell: UICollectionViewCell {
         }
     }
     
+    var TypeisImage: Bool! {
+        didSet {
+            iSelectButton.isHidden = !TypeisImage
+        }
+    }
      lazy var iThumbImageView: UIImageView = {
         self.iThumbImageView = UIImageView()
         self.iThumbImageView.frame = self.bounds

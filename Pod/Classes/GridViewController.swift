@@ -134,6 +134,10 @@ class GridViewController: UIViewController {
         PhotoMannager.loadAlbumPhotos(collection: albumInfo.collection) { (assets) in
             self.assets = assets
             self.iAssetCollectionView.reloadData()
+            guard assets.count > 0 else {
+                return
+            }
+            
             let indexPath = IndexPath(row: assets.count - 1, section: 0)
             self.iAssetCollectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.top, animated: false)
         }
@@ -176,6 +180,7 @@ extension GridViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.asset = asset
         cell.assetSelectDelegate = self
         cell.isSelectImage = selectAssets.contains(asset)
+        cell.TypeisImage = asset.mediaType == .image
         
         PHCachingImageManager.default().requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: imageRequestOptions) { (image, info) in
             if cell.asset.localIdentifier == asset.localIdentifier {

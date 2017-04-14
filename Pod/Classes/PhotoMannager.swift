@@ -73,7 +73,10 @@ struct PhotoMannager {
             var assets = [PHAsset]()
             let list = PHAsset.fetchAssets(in: collection, options: nil)
             for idx in 0..<list.count {
-                assets.append(list.object(at: idx))
+                let asset = list.object(at: idx)
+//                if asset.mediaType == .image {
+                    assets.append(asset)
+//                }
             }
             DispatchQueue.main.async(execute: {
                 resultHandler(assets)
@@ -88,7 +91,9 @@ struct PhotoMannager {
         imageRequestOptions.deliveryMode = .highQualityFormat
         PHCachingImageManager.default().requestImageData(for: asset, options: imageRequestOptions, resultHandler: { (data, a, o, i) in
             DispatchQueue.main.async(execute: {
-                resultHandler(data!)
+                if data != nil {
+                    resultHandler(data!)
+                }
             })
         })
     }
