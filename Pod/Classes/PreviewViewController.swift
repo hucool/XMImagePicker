@@ -217,9 +217,6 @@ extension PreviewViewController: UICollectionViewDelegate, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell(forIndexPath: indexPath) as PreviewCell
         cell.localIdentifier = asset.localIdentifier
         cell.tapDelegate = self
-        
-        iSelectButton.isHidden = !(asset.mediaType == .image)
-        iOriginalButton.isHidden = iSelectButton.isHidden
 
         let w = self.view.frame.size.width * UIScreen.main.scale
         let h = self.view.frame.size.height * UIScreen.main.scale
@@ -281,6 +278,12 @@ extension PreviewViewController: UIScrollViewDelegate {
         let idx = collectionViewCellIndex()
         if idx < assets.count && idx != lastLoadOriginalIndex {
             let asset = assets[idx]
+            
+            DispatchQueue.main.async {
+                self.iSelectButton.isHidden = !(asset.mediaType == .image)
+                self.iOriginalButton.isHidden = self.iSelectButton.isHidden
+            }
+            
             let w = self.view.frame.size.width * UIScreen.main.scale
             let h = self.view.frame.size.height * UIScreen.main.scale
             let size = CGSize(width: w, height: h)
